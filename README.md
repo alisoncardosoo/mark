@@ -77,6 +77,7 @@ Mark Assistant is currently an active MVP with the core document workflow implem
 ### Editing Experience
 
 - Native macOS document app for `.md` and `.markdown` files.
+- Native prompt and Settings action to make Mark Assistant the default app for Markdown files.
 - Editor, split and preview-only modes.
 - Live preview with debounce for smoother typing.
 - Search in the editor and preview.

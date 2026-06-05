@@ -8,6 +8,8 @@ struct SettingsView: View {
     @AppStorage("previewTheme") private var previewTheme = PreviewTheme.system.rawValue
     @AppStorage(AppPreferenceKeys.appLanguage) private var appLanguage = AppLanguage.system.rawValue
     @State private var isShowingLanguageRestartAlert = false
+    @State private var isDefaultMarkdownApp = DefaultMarkdownAppService.isCurrentAppDefault
+    @State private var defaultMarkdownAppMessage: String?
 
     var body: some View {
         ScrollView {
@@ -44,6 +46,12 @@ struct SettingsView: View {
                 }
 
                 SettingsPanel(strings.settingsApp, systemImage: "info.circle") {
+                    DefaultMarkdownAppRow(
+                        isDefault: $isDefaultMarkdownApp,
+                        resultMessage: $defaultMarkdownAppMessage,
+                        strings: strings
+                    )
+                    SettingsDivider()
                     SettingsInfoRow(title: strings.version, value: AppInfo.versionDisplay)
                     SettingsDivider()
                     SettingsInfoRow(title: strings.format, value: "GitHub-Flavored Markdown")
@@ -63,6 +71,9 @@ struct SettingsView: View {
         .tint(.markAssistantLilac)
         .background(SettingsBackground())
         .frame(width: 560, height: 640)
+        .onAppear {
+            isDefaultMarkdownApp = DefaultMarkdownAppService.isCurrentAppDefault
+        }
         .onChange(of: appLanguage) { _, rawValue in
             (AppLanguage(rawValue: rawValue) ?? .system).applyToProcessPreferences()
             isShowingLanguageRestartAlert = true
@@ -263,6 +274,68 @@ private struct SettingsInfoRow: View {
                 .textSelection(.enabled)
         }
         .frame(height: 42)
+    }
+}
+
+private struct DefaultMarkdownAppRow: View {
+    @Binding var isDefault: Bool
+    @Binding var resultMessage: String?
+    let strings: MarkAssistantStrings
+
+    var body: some View {
+        HStack(spacing: 18) {
+            VStack(alignment: .leading, spacing: 3) {
+                Text(strings.defaultMarkdownApp)
+                    .font(.callout.weight(.medium))
+
+                Text(resultMessage ?? statusText)
+                    .font(.footnote)
+                    .foregroundStyle(isDefault ? Color.markAssistantLilac : .secondary)
+                    .lineLimit(2)
+            }
+
+            Spacer()
+
+            Button(isDefault ? strings.defaultMarkdownAppIsDefault : strings.makeDefaultMarkdownApp) {
+                makeDefault()
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.regular)
+            .tint(.markAssistantLilac)
+            .disabled(isDefault)
+            .help(strings.defaultMarkdownAppHelp)
+        }
+        .frame(minHeight: 54)
+        .padding(.vertical, 6)
+        .onAppear {
+            refresh()
+        }
+    }
+
+    private var statusText: String {
+        isDefault ? strings.defaultMarkdownAppCurrent : strings.defaultMarkdownAppNotCurrent
+    }
+
+    private func refresh() {
+        isDefault = DefaultMarkdownAppService.isCurrentAppDefault
+        if isDefault {
+            resultMessage = nil
+        }
+    }
+
+    private func makeDefault() {
+        switch DefaultMarkdownAppService.makeCurrentAppDefault() {
+        case .success:
+            UserDefaults.standard.set(true, forKey: AppPreferenceKeys.defaultMarkdownAppPromptAnswered)
+            isDefault = true
+            resultMessage = strings.defaultMarkdownAppCurrent
+        case .missingBundleIdentifier:
+            isDefault = false
+            resultMessage = strings.defaultMarkdownAppMissingBundleMessage
+        case .failed(let status):
+            isDefault = false
+            resultMessage = strings.defaultMarkdownAppFailureMessage(status: status)
+        }
     }
 }
 

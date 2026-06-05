@@ -8,6 +8,7 @@ enum AppPreferenceKeys {
     static let splitFraction = "splitFraction"
     static let windowFrame = "windowFrame"
     static let appLanguage = "appLanguage"
+    static let defaultMarkdownAppPromptAnswered = "defaultMarkdownAppPromptAnswered"
 }
 
 enum AppPreferences {

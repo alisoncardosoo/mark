@@ -95,6 +95,19 @@ struct MarkAssistantStrings {
     var nativeMacOS: String { text(en: "Native macOS", pt: "macOS nativo") }
     var heroSubtitle: String { text(en: "Fast Markdown editing with a GitHub-style preview.", pt: "Edição Markdown rápida com preview estilo GitHub.") }
     var creatorRole: String { text(en: "Creator and owner", pt: "Criador e proprietário") }
+    var defaultMarkdownApp: String { text(en: "Markdown default app", pt: "App padrão de Markdown") }
+    var defaultMarkdownAppCurrent: String { text(en: "Mark Assistant opens .md files by default.", pt: "Mark Assistant abre arquivos .md por padrão.") }
+    var defaultMarkdownAppNotCurrent: String { text(en: "Another app opens .md files by default.", pt: "Outro app abre arquivos .md por padrão.") }
+    var makeDefaultMarkdownApp: String { text(en: "Make Default", pt: "Tornar padrão") }
+    var defaultMarkdownAppIsDefault: String { text(en: "Default", pt: "Padrão") }
+    var defaultMarkdownAppHelp: String { text(en: "Make Mark Assistant the default app for Markdown files", pt: "Torna o Mark Assistant o app padrão para arquivos Markdown") }
+    var defaultMarkdownAppPromptTitle: String { text(en: "Make Mark Assistant the default app for Markdown?", pt: "Tornar o Mark Assistant o app padrão de Markdown?") }
+    var defaultMarkdownAppPromptMessage: String { text(en: "Markdown files opened from Finder will open directly in Mark Assistant.", pt: "Arquivos Markdown abertos pelo Finder abrirão direto no Mark Assistant.") }
+    var defaultMarkdownAppSuccessTitle: String { text(en: "Mark Assistant is now the default app", pt: "Mark Assistant agora é o app padrão") }
+    var defaultMarkdownAppSuccessMessage: String { text(en: ".md and .markdown files will open in Mark Assistant.", pt: "Arquivos .md e .markdown abrirão no Mark Assistant.") }
+    var defaultMarkdownAppFailureTitle: String { text(en: "Could not change the default app", pt: "Não foi possível mudar o app padrão") }
+    var defaultMarkdownAppMissingBundleMessage: String { text(en: "Build and open Mark Assistant as a macOS app bundle, then try again.", pt: "Compile e abra o Mark Assistant como um app macOS, depois tente novamente.") }
+    var notNow: String { text(en: "Not Now", pt: "Agora não") }
 
     func displayModeTitle(_ mode: EditorDisplayMode) -> String {
         switch mode {
@@ -131,6 +144,13 @@ struct MarkAssistantStrings {
 
     func jumpTo(_ title: String) -> String {
         text(en: "Jump to \(title)", pt: "Ir para \(title)")
+    }
+
+    func defaultMarkdownAppFailureMessage(status: OSStatus) -> String {
+        text(
+            en: "macOS returned error \(status). You can still change this in Finder with Open With.",
+            pt: "O macOS retornou o erro \(status). Você ainda pode mudar isso no Finder em Abrir Com."
+        )
     }
 }
 

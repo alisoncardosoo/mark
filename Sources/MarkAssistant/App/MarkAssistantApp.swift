@@ -39,5 +39,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.regular)
         NSApp.activate(ignoringOtherApps: true)
+
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(700))
+            DefaultMarkdownAppPromptCoordinator.presentIfNeeded(language: AppPreferences.appLanguage)
+        }
     }
 }
