@@ -2,8 +2,9 @@
 set -euo pipefail
 
 MODE="${1:-run}"
-APP_NAME="Mark"
-BUNDLE_ID="com.alisoncardoso.Mark"
+APP_NAME="Mark Assistant"
+EXECUTABLE_NAME="MarkAssistant"
+BUNDLE_ID="com.alisoncardoso.MarkAssistant"
 MIN_SYSTEM_VERSION="14.0"
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -12,19 +13,22 @@ APP_BUNDLE="$DIST_DIR/$APP_NAME.app"
 APP_CONTENTS="$APP_BUNDLE/Contents"
 APP_MACOS="$APP_CONTENTS/MacOS"
 APP_RESOURCES="$APP_CONTENTS/Resources"
-APP_BINARY="$APP_MACOS/$APP_NAME"
+APP_BINARY="$APP_MACOS/$EXECUTABLE_NAME"
 INFO_PLIST="$APP_CONTENTS/Info.plist"
 
-pkill -x "$APP_NAME" >/dev/null 2>&1 || true
+pkill -x "$EXECUTABLE_NAME" >/dev/null 2>&1 || true
 
 cd "$ROOT_DIR"
 swift build
-BUILD_BINARY="$(swift build --show-bin-path)/$APP_NAME"
+BUILD_BINARY="$(swift build --show-bin-path)/$EXECUTABLE_NAME"
 
 rm -rf "$APP_BUNDLE"
 mkdir -p "$APP_MACOS" "$APP_RESOURCES"
 cp "$BUILD_BINARY" "$APP_BINARY"
 cp "$ROOT_DIR/Resources/AppIcon.icns" "$APP_RESOURCES/AppIcon.icns"
+if [ -d "$ROOT_DIR/Resources/Localizations" ]; then
+  cp -R "$ROOT_DIR"/Resources/Localizations/*.lproj "$APP_RESOURCES/" 2>/dev/null || true
+fi
 chmod +x "$APP_BINARY"
 
 cat >"$INFO_PLIST" <<PLIST
@@ -33,13 +37,22 @@ cat >"$INFO_PLIST" <<PLIST
 <plist version="1.0">
 <dict>
   <key>CFBundleExecutable</key>
-  <string>$APP_NAME</string>
+  <string>$EXECUTABLE_NAME</string>
   <key>CFBundleIdentifier</key>
   <string>$BUNDLE_ID</string>
   <key>CFBundleName</key>
   <string>$APP_NAME</string>
   <key>CFBundleDisplayName</key>
   <string>$APP_NAME</string>
+  <key>CFBundleDevelopmentRegion</key>
+  <string>en</string>
+  <key>CFBundleAllowMixedLocalizations</key>
+  <true/>
+  <key>CFBundleLocalizations</key>
+  <array>
+    <string>en</string>
+    <string>pt-BR</string>
+  </array>
   <key>CFBundleIconFile</key>
   <string>AppIcon</string>
   <key>CFBundlePackageType</key>
@@ -118,7 +131,7 @@ case "$MODE" in
     ;;
   --logs|logs)
     open_app
-    /usr/bin/log stream --info --style compact --predicate "process == \"$APP_NAME\""
+    /usr/bin/log stream --info --style compact --predicate "process == \"$EXECUTABLE_NAME\""
     ;;
   --telemetry|telemetry)
     open_app
@@ -127,7 +140,7 @@ case "$MODE" in
   --verify|verify)
     open_app
     sleep 1
-    pgrep -x "$APP_NAME" >/dev/null
+    pgrep -x "$EXECUTABLE_NAME" >/dev/null
     ;;
   *)
     echo "usage: $0 [run|--debug|--logs|--telemetry|--verify]" >&2

@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="Resources/AppIcon.source/mark-icon.png" alt="Mark app icon" width="128" />
+<img src="Resources/AppIcon.source/mark-assistant-icon.png" alt="Mark Assistant app icon" width="128" />
 
-# Mark
+# Mark Assistant
 
 ### A lightweight native macOS Markdown editor with a GitHub-style live preview.
 
@@ -52,11 +52,11 @@
 
 ## About
 
-**Mark** is a fast, practical and native macOS Markdown editor inspired by the simplicity of apps like MacDown, but built from scratch with modern SwiftUI and AppKit integration.
+**Mark Assistant** is a fast, practical and native macOS Markdown editor inspired by the simplicity of apps like MacDown, but built from scratch with modern SwiftUI and AppKit integration.
 
-The goal is simple: make reading and editing `.md` files feel natural on macOS. Instead of forcing users to choose between raw source code and rendered output, Mark combines a text editor, a GitHub-Flavored Markdown preview and a focused reading mode in one clean desktop experience.
+The goal is simple: make reading and editing `.md` files feel natural on macOS. Instead of forcing users to choose between raw source code and rendered output, Mark Assistant combines a text editor, a GitHub-Flavored Markdown preview and a focused reading mode in one clean desktop experience.
 
-Mark is designed for:
+Mark Assistant is designed for:
 
 - Developers writing README files, docs and technical notes.
 - Makers who want a lightweight Markdown viewer without Electron.
@@ -70,7 +70,7 @@ Mark is designed for:
   <img alt="Active development" src="https://img.shields.io/badge/development-active-success?style=for-the-badge" />
 </p>
 
-Mark is currently an active MVP with the core document workflow implemented: open, edit, preview, search, export and remember the last workspace preferences.
+Mark Assistant is currently an active MVP with the core document workflow implemented: open, edit, preview, search, export and remember the last workspace preferences.
 
 ## Features
 
@@ -113,7 +113,7 @@ Mark is currently an active MVP with the core document workflow implemented: ope
 
 <div align="center">
 
-<img src="Resources/AppIcon.source/mark-icon-standard.png" alt="Mark app icon preview" width="220" />
+<img src="Resources/AppIcon.source/mark-assistant-icon-standard.png" alt="Mark Assistant app icon preview" width="220" />
 
 <p>
   <strong>Native editor. GitHub-style preview. No Electron.</strong>
@@ -132,7 +132,7 @@ Mark is currently an active MVP with the core document workflow implemented: ope
 | macOS App Download | Coming soon |
 | Documentation | This README and source code |
 
-Mark is currently intended to be built locally with SwiftPM.
+Mark Assistant is currently intended to be built locally with SwiftPM.
 
 ## Installation
 
@@ -168,7 +168,7 @@ swift test
 ./script/build_and_run.sh
 ```
 
-The script builds the SwiftPM executable, creates `dist/Mark.app`, registers the app bundle and launches it.
+The script builds the SwiftPM executable, creates `dist/Mark Assistant.app`, registers the app bundle and launches it.
 
 ### Verify the Bundle
 
@@ -202,7 +202,7 @@ swift build
 ## Architecture
 
 ```text
-Mark
+Mark Assistant
 ├── Package.swift
 ├── Resources
 │   ├── AppIcon.icns
@@ -210,27 +210,27 @@ Mark
 ├── script
 │   └── build_and_run.sh
 ├── Sources
-│   ├── MarkApp
+│   ├── MarkAssistant
 │   │   ├── App
 │   │   ├── Services
 │   │   ├── Support
 │   │   └── Views
-│   └── MarkCore
+│   └── MarkAssistantCore
 │       ├── Models
 │       ├── Resources
 │       ├── Services
 │       └── Support
 └── Tests
-    └── MarkCoreTests
+    └── MarkAssistantCoreTests
 ```
 
 ### Core Modules
 
 | Module | Responsibility |
 | --- | --- |
-| `MarkApp` | macOS application shell, views, toolbar, settings and native integrations |
-| `MarkCore` | Markdown document model, rendering, outline extraction, security and export services |
-| `MarkCoreTests` | Renderer, document, export and editor-store tests |
+| `MarkAssistant` | macOS application shell, views, toolbar, settings and native integrations |
+| `MarkAssistantCore` | Markdown document model, rendering, outline extraction, security and export services |
+| `MarkAssistantCoreTests` | Renderer, document, export and editor-store tests |
 
 ### Rendering Flow
 
@@ -308,7 +308,7 @@ Please keep changes aligned with the project goals:
 
 ### Alison Cardoso
 
-Creator and owner of Mark.
+Creator and owner of Mark Assistant.
 
 <p>
   <a href="https://github.com/alisoncardosoo">
@@ -322,7 +322,7 @@ Creator and owner of Mark.
 
 No license file has been published yet.
 
-Until a license is added, all rights are reserved by the project owner. If you want to use, distribute or modify Mark outside personal evaluation, open an issue or contact the author first.
+Until a license is added, all rights are reserved by the project owner. If you want to use, distribute or modify Mark Assistant outside personal evaluation, open an issue or contact the author first.
 
 ---
 
@@ -332,6 +332,6 @@ Made with Swift for people who like Markdown fast, clean and native.
 
 <br />
 
-<strong>Mark</strong> · Native Markdown editor for macOS
+<strong>Mark Assistant</strong> · Native Markdown editor for macOS
 
 </div>

@@ -3,20 +3,20 @@
 import PackageDescription
 
 let package = Package(
-    name: "Mark",
+    name: "MarkAssistant",
     platforms: [
         .macOS(.v14)
     ],
     products: [
-        .executable(name: "Mark", targets: ["MarkApp"]),
-        .library(name: "MarkCore", targets: ["MarkCore"])
+        .executable(name: "MarkAssistant", targets: ["MarkAssistant"]),
+        .library(name: "MarkAssistantCore", targets: ["MarkAssistantCore"])
     ],
     dependencies: [
         .package(url: "https://github.com/swiftlang/swift-cmark.git", branch: "gfm")
     ],
     targets: [
         .target(
-            name: "MarkCore",
+            name: "MarkAssistantCore",
             dependencies: [
                 .product(name: "cmark-gfm", package: "swift-cmark"),
                 .product(name: "cmark-gfm-extensions", package: "swift-cmark")
@@ -26,12 +26,12 @@ let package = Package(
             ]
         ),
         .executableTarget(
-            name: "MarkApp",
-            dependencies: ["MarkCore"]
+            name: "MarkAssistant",
+            dependencies: ["MarkAssistantCore"]
         ),
         .testTarget(
-            name: "MarkCoreTests",
-            dependencies: ["MarkCore"],
+            name: "MarkAssistantCoreTests",
+            dependencies: ["MarkAssistantCore"],
             resources: [
                 .process("Fixtures")
             ]
